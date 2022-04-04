@@ -13,9 +13,7 @@ class DiscordMessage (
     var _jdamessage: JDAMessage
 ) : ChatMessage(content, user, channel) {
     override fun reply(content: String): Boolean {
-        Discord().sendMessage(content, channel as DiscordChannel)
-        println(_jdamessage.reply(content))
-        println(_jdamessage)
+        _jdamessage.reply(content).queue()
         return true
     }
 }

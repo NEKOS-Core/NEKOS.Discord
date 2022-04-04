@@ -15,14 +15,13 @@ class Discord : ChatService() {
     override fun initService(): Boolean {
         jda = JDABuilder.createLight(System.getenv("BOT_TOKEN"))
         .addEventListeners(Listener()).build()
-        jda?.getTextChannelById(929180392047669258)?.sendMessage("Testing message")
         return true
     }
 
     override fun sendMessage(content: String, channel: Channel): Boolean {
         try {
             channel as DiscordChannel
-            jda?.getTextChannelById(channel._jdachannel.id)?.sendMessage(content)
+            jda?.getTextChannelById(channel._jdachannel.id)?.sendMessage(content)?.queue()
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
