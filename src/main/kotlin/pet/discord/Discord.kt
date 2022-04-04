@@ -21,6 +21,7 @@ class Discord : ChatService() {
 
     override fun sendMessage(content: String, channel: Channel): Boolean {
         try {
+            channel as DiscordChannel
             jda?.getTextChannelById(channel._jdachannel.id)?.sendMessage(content)
         } catch (ex: Exception) {
             ex.printStackTrace()
