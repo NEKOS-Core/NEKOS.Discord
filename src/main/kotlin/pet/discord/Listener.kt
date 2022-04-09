@@ -16,7 +16,7 @@ class Listener : ListenerAdapter() {
         var user = DiscordUser(e.author.getName(), e.member?.getEffectiveName() as String, "TEMPORARY")
         var guild = DiscordGuild(e.message.guild.name, e.message.guild)
         var channel = DiscordChannel(e.message.channel.name, guild, e.message.guildChannel)
-        var message = DiscordMessage(e.message.contentRaw, user, channel, e.message)
+        var message = DiscordMessage(e.message.contentRaw, user, channel, e.message, Discord())
         Discord().getServer().serverManager.fireEvent(MessageEvent(message))
     }
 }

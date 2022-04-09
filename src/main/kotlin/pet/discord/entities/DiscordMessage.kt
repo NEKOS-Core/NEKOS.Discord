@@ -10,8 +10,9 @@ class DiscordMessage (
     content: String,
     user: DiscordUser,
     channel: DiscordChannel,
-    var _jdamessage: JDAMessage
-) : ChatMessage(content, user, channel) {
+    var _jdamessage: JDAMessage,
+    var _service: Discord
+) : ChatMessage(content, user, channel, _service) {
     override fun reply(content: String): Boolean {
         _jdamessage.reply(content).queue()
         return true
