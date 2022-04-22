@@ -15,15 +15,25 @@ class Discord : ChatService() {
     override var name = "Discord"
 
     companion object {
+        @JvmStatic
         var jda: JDA? = null
         var selfUser: User? = null
+    }
+
+    /**
+     * Gets the user this service is running from
+     * @return User that this service is running as
+     */
+    override fun getSelfUser(): User? {
+        return selfUser
     }
 
     override fun initService(): Boolean {
         jda = JDABuilder.createLight(System.getenv("BOT_TOKEN"))
         .addEventListeners(Listener()).build()
-
+        
         selfUser = DiscordUser(jda?.getSelfUser() as JDAUser)
+
         return true
     }
 
