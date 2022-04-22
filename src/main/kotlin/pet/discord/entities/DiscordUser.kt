@@ -1,7 +1,6 @@
 package pet.nekos.discord.entities
 
 import net.dv8tion.jda.api.entities.User as JDAUser
-import net.dv8tion.jda.api.entities.Member as JDAMember
 
 import pet.nekos.api.user.User
 
@@ -17,11 +16,5 @@ class DiscordUser (
         user.getName(), 
         "TEMPORARY",
         user) { }
-    
-    constructor(member: JDAMember) : this(
-        member.getUser().getName(), 
-        member.getEffectiveName() 
-        "TEMPORARY",
-        member.getUser()) { }
 
 }
