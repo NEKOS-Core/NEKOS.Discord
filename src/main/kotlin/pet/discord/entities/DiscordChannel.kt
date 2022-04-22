@@ -12,11 +12,13 @@ import pet.nekos.discord.Discord
 
 class DiscordChannel(
     name: String,
+    service: Discord,
     var _jdachannel: JDAChannel
-) : Channel(name) {
+) : Channel(name, service) {
 
     constructor(channel: JDAChannel) : this(
         channel.getName(),
+        Discord(),
         channel) { }
 
     override fun getUsers(): Array<User> {

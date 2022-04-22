@@ -1,9 +1,10 @@
 package pet.nekos.discord.entities
 
 import pet.nekos.api.message.ChatMessage
-import pet.nekos.discord.Discord
 
 import net.dv8tion.jda.api.entities.Message as JDAMessage
+
+import pet.nekos.discord.Discord
 
 class DiscordMessage (
     content: String,
@@ -15,7 +16,10 @@ class DiscordMessage (
 
     constructor(message: JDAMessage) : this(
         message.contentRaw, 
-        DiscordUser(message.author)) { }
+        DiscordUser(message.author),
+        DiscordChannel(message.channel),
+        Discord(),
+        message) { }
 
     override fun reply(content: String): Boolean {
         _jdamessage.reply(content).queue()
