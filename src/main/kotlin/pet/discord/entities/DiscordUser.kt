@@ -3,6 +3,7 @@ package pet.nekos.discord.entities
 import net.dv8tion.jda.api.entities.User as JDAUser
 
 import pet.nekos.api.user.User
+import pet.nekos.api.user.Hash
 
 import pet.nekos.discord.Discord
 
@@ -16,8 +17,8 @@ class DiscordUser (
     
     constructor(user: JDAUser) : this(
         user.getName(), 
-        user.getName(), 
-        "TEMPORARY",
+        user.getName(),
+        Hash.hash(user.getId()), 
         Discord(),
         user) { }
 
