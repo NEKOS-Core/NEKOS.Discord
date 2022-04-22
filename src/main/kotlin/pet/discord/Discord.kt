@@ -2,12 +2,14 @@ package pet.nekos.discord
 
 import pet.nekos.api.service.ChatService
 import pet.nekos.api.channel.Channel
-import pet.nekos.discord.entities.DiscordChannel
+import pet.nekos.api.user.User
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.User as JDAUser
 
-import pet.nekos.api.user.User
+import pet.nekos.discord.entities.DiscordChannel
+import pet.nekos.discord.entities.DiscordUser
 
 class Discord : ChatService() {
     override var name = "Discord"
@@ -21,10 +23,7 @@ class Discord : ChatService() {
         jda = JDABuilder.createLight(System.getenv("BOT_TOKEN"))
         .addEventListeners(Listener()).build()
 
-        selfUser = User(
-            jda?.getSelfUser()?.getName() as String,
-            jda?.getSelfUser()?.getName() as String,
-            "TEMPORARY")
+        selfUser = DiscordUser(jda?.getSelfUser() as JDAUser)
         return true
     }
 
