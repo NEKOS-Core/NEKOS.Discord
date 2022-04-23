@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.entities.User as JDAUser
 import pet.nekos.discord.entities.DiscordChannel
 import pet.nekos.discord.entities.DiscordUser
 
+import java.io.File
+
 class Discord : ChatService() {
     override var name = "Discord"
 
@@ -37,10 +39,15 @@ class Discord : ChatService() {
         return true
     }
 
-    override fun sendMessage(content: String, channel: Channel): Boolean {
+    override fun sendMessage(content: String, channel: Channel, vararg attachments: File): Boolean {
         try {
             channel as DiscordChannel
-            jda?.getTextChannelById(channel._jdachannel.id)?.sendMessage(content)?.queue()
+            var message = jda?.getTextChannelById(channel._jdachannel.id)?.sendMessage(content)
+            for (f in attachments) {
+                message?.addFile(f)
+            }
+            message?.queue()
+    
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
@@ -48,9 +55,14 @@ class Discord : ChatService() {
         return true
     }
 
-    override fun sendMessage(content: String): Boolean {
+    override fun sendMessage(content: String, vararg attachments: File): Boolean {
         try {
-            jda?.getTextChannelById(System.getenv("DEFAULT_CHANNEL"))?.sendMessage(content)?.queue()
+            var message = jda?.getTextChannelById(System.getenv("DEFAULT_CHANNEL"))?.sendMessage(content)
+            for (f in attachments) {
+                message?.addFile(f)
+            }
+            message?.queue()
+
         } catch (ex: Exception) {
             ex.printStackTrace()
         }

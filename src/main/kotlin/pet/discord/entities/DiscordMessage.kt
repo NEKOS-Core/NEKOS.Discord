@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.entities.Message as JDAMessage
 
 import pet.nekos.discord.Discord
 
+import java.io.File
+
 class DiscordMessage (
     content: String,
     user: DiscordUser,
@@ -21,8 +23,13 @@ class DiscordMessage (
         Discord(),
         message) { }
 
-    override fun reply(content: String): Boolean {
-        _jdamessage.reply(content).queue()
+    override fun reply(content: String, vararg attachments: File ): Boolean {
+        var reply = _jdamessage.reply(content)
+        for (f in attachments) {
+            reply.addFile(f)
+        }
+        reply.queue()
+
         return true
     }
 }
