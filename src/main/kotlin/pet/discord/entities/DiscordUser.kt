@@ -1,9 +1,12 @@
 package pet.nekos.discord.entities
 
 import net.dv8tion.jda.api.entities.User as JDAUser
+import net.dv8tion.jda.api.entities.Member as JDAMember
+import net.dv8tion.jda.api.entities.Guild as JDAGuild
 
 import pet.nekos.api.user.User
 import pet.nekos.api.user.Hash
+import pet.nekos.api.guild.Guild
 
 import pet.nekos.discord.Discord
 
@@ -11,15 +14,56 @@ class DiscordUser (
     name: String,
     nickname: String = name,
     hash: String,
+    guild: Guild?,
     service: Discord,
-    _jdauser: JDAUser
-) : User(name, nickname, hash, service){ 
+    _jdauser: JDAUser,
+    _jdamember: JDAMember?,
+) : User(name, nickname, hash, guild, service){ 
     
+    /**
+     * Constructor to create a DiscordUser from a JDA User
+     * Member can not be null.
+     * 
+     * @property user JDA User to create the DiscordUser with
+     */
     constructor(user: JDAUser) : this(
         user.getName(), 
         user.getName(),
         Hash.hash(user.getId()), 
+        null,
         Discord(),
-        user) { }
+        user,
+        null) { }
 
+    /**
+     * Constructor to create a DiscordUser from a JDA Member
+     * Member can not be null.
+     * 
+     * @property user JDA Member to create the DiscordUser with
+     */
+    constructor(member: JDAMember) : this(
+        member.getUser().getName(), 
+        member.getEffectiveName(),
+        Hash.hash(member.getId()), 
+        DiscordGuild(member.getGuild()),
+        Discord(),
+        member.getUser(),
+        member) { }
+    
+    /**
+     * Constructor to use when it isn't certain if a member is present. Will fill in member properties if possible. 
+     * Member can be null.
+     * 
+     * @property user JDA User to create the DiscordUser with
+     * @property user JDA Member to create the DiscordUser with
+     */
+    constructor(user: JDAUser, member: JDAMember?) : this(
+        user.getName(), 
+        if (member == null) user.getName() else member.getEffectiveName(),
+        Hash.hash(user.getId()), 
+        if (member == null) null else DiscordGuild(member.getGuild()),
+        Discord(),
+        user,
+        member) { }
+    
 }
