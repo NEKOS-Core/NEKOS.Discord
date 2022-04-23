@@ -3,8 +3,6 @@ package pet.nekos.discord.entities
 import pet.nekos.api.message.ChatMessage
 
 import net.dv8tion.jda.api.entities.Message as JDAMessage
-import net.dv8tion.jda.api.entities.Member as JDAMember
-import net.dv8tion.jda.api.entities.User as JDAUser
 
 import pet.nekos.discord.Discord
 
