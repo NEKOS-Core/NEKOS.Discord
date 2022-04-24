@@ -1,7 +1,7 @@
 package pet.nekos.discord.entities
 
-import pet.nekos.api.channel.Channel
-import pet.nekos.api.user.User
+import pet.nekos.api.entities.channel.Channel
+import pet.nekos.api.entities.user.User
 
 import net.dv8tion.jda.api.entities.Channel as JDAChannel
 import net.dv8tion.jda.api.entities.User as JDAUser

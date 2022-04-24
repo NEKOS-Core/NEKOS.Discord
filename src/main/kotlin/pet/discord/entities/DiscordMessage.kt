@@ -1,6 +1,6 @@
 package pet.nekos.discord.entities
 
-import pet.nekos.api.message.ChatMessage
+import pet.nekos.api.entities.message.ChatMessage
 
 import net.dv8tion.jda.api.entities.Message as JDAMessage
 

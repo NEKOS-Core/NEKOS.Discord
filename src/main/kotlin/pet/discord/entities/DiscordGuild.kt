@@ -1,7 +1,7 @@
 package pet.nekos.discord.entities
 
-import pet.nekos.api.guild.Guild
-import pet.nekos.api.channel.GuildChannel
+import pet.nekos.api.entities.guild.Guild
+import pet.nekos.api.entities.channel.GuildChannel
 
 import net.dv8tion.jda.api.entities.Guild as JDAGuild
 import net.dv8tion.jda.api.entities.GuildChannel as JDAGuildChannel
