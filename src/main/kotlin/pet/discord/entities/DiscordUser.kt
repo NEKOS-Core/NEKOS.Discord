@@ -4,11 +4,13 @@ import net.dv8tion.jda.api.entities.User as JDAUser
 import net.dv8tion.jda.api.entities.Member as JDAMember
 import net.dv8tion.jda.api.entities.Guild as JDAGuild
 
-import pet.nekos.api.user.User
-import pet.nekos.api.user.Hash
-import pet.nekos.api.guild.Guild
+import pet.nekos.api.entities.user.User
+import pet.nekos.api.entities.user.Hash
+import pet.nekos.api.entities.guild.Guild
 
 import pet.nekos.discord.Discord
+
+import java.io.File
 
 class DiscordUser (
     name: String,
@@ -16,8 +18,8 @@ class DiscordUser (
     hash: String,
     guild: Guild?,
     service: Discord,
-    _jdauser: JDAUser,
-    _jdamember: JDAMember?,
+    var _jdauser: JDAUser,
+    var _jdamember: JDAMember?,
 ) : User(name, nickname, hash, guild, service){ 
     
     /**
@@ -65,5 +67,19 @@ class DiscordUser (
         Discord(),
         user,
         member) { }
+
+    override fun sendMessage(content: String, vararg attachments: File ): Boolean {
+        _jdauser.openPrivateChannel().queue { channel -> run {
+            var reply = channel.sendMessage(content)
+
+            for (f in attachments) {
+                reply.addFile(f)
+            }
+            reply.queue()
+        }}
+        
+        return true
+
+    }
     
 }
