@@ -13,13 +13,12 @@ import java.util.Date
 class Listener : ListenerAdapter() {
     override fun onMessageReceived(e: MessageReceivedEvent) {
         var entities = mutableSetOf<Entity>(
-            DiscordMessage(e.message), 
-            DiscordUser(e.author, e.member), 
-            DiscordChannel(e.channel), 
+            DiscordMessage(e.message),
+            DiscordUser(e.author, e.member),
+            DiscordChannel(e.channel),
         )
         if (e.isFromGuild) {
             entities.add(DiscordGuild(e.guild))
-            entities.add(DiscordGuildChannel(e.guildChannel))
         }
 
         Discord().getServer().serverManager.fireEvent(MessageEvent(), *entities.toTypedArray()) 

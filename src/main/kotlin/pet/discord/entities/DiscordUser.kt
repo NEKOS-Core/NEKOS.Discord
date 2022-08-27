@@ -4,9 +4,7 @@ import net.dv8tion.jda.api.entities.User as JDAUser
 import net.dv8tion.jda.api.entities.Member as JDAMember
 import net.dv8tion.jda.api.entities.Guild as JDAGuild
 
-import pet.nekos.api.entities.user.User
-import pet.nekos.api.entities.user.Hash
-import pet.nekos.api.entities.guild.Guild
+import pet.nekos.api.entities.*
 
 import pet.nekos.discord.Discord
 
@@ -20,18 +18,18 @@ class DiscordUser (
     service: Discord,
     var _jdauser: JDAUser,
     var _jdamember: JDAMember?,
-) : User(name, nickname, hash, guild, service){ 
-    
+) : User(name, nickname, hash, guild, service){
+
     /**
      * Constructor to create a DiscordUser from a JDA User
-     * Member can not be null.
-     * 
+     * User can not be null.
+     *
      * @property user JDA User to create the DiscordUser with
      */
     constructor(user: JDAUser) : this(
-        user.getName(), 
         user.getName(),
-        Hash.hash(user.getId()), 
+        user.getName(),
+        User.generateHash(user.getId()),
         null,
         Discord(),
         user,
@@ -40,18 +38,18 @@ class DiscordUser (
     /**
      * Constructor to create a DiscordUser from a JDA Member
      * Member can not be null.
-     * 
+     *
      * @property user JDA Member to create the DiscordUser with
      */
     constructor(member: JDAMember) : this(
         member.getUser().getName(), 
         member.getEffectiveName(),
-        Hash.hash(member.getId()), 
+        User.generateHash(member.getId()), 
         DiscordGuild(member.getGuild()),
         Discord(),
         member.getUser(),
         member) { }
-    
+
     /**
      * Constructor to use when it isn't certain if a member is present. Will fill in member properties if possible. 
      * Member can be null.
@@ -60,9 +58,9 @@ class DiscordUser (
      * @property user JDA Member to create the DiscordUser with
      */
     constructor(user: JDAUser, member: JDAMember?) : this(
-        user.getName(), 
+        user.getName(),
         if (member == null) user.getName() else member.getEffectiveName(),
-        Hash.hash(user.getId()), 
+        User.generateHash(user.getId()),
         if (member == null) null else DiscordGuild(member.getGuild()),
         Discord(),
         user,
@@ -77,9 +75,9 @@ class DiscordUser (
             }
             reply.queue()
         }}
-        
+
         return true
 
     }
-    
+
 }

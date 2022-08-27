@@ -1,6 +1,6 @@
 package pet.nekos.discord.entities
 
-import pet.nekos.api.entities.message.ChatMessage
+import pet.nekos.api.entities.*
 
 import net.dv8tion.jda.api.entities.Message as JDAMessage
 
@@ -14,7 +14,7 @@ class DiscordMessage (
     channel: DiscordChannel,
     service: Discord,
     var _jdamessage: JDAMessage,
-) : ChatMessage(content, user, channel, service) {
+) : Message(content, user, channel, service) {
 
     constructor(message: JDAMessage) : this(
         message.contentRaw, 
